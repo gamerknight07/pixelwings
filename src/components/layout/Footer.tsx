@@ -14,7 +14,7 @@ export const Footer = () => {
           <div className="md:col-span-1 space-y-4">
             <div className="flex items-center space-x-3 mb-6 group">
               <span className="text-2xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent" style={{ fontFamily: 'Pixelify Sans, monospace' }}>
-                PixelWings
+                <Link to="/">PixelWings</Link>
               </span>
             </div>
             <p className="text-text-muted text-sm leading-relaxed max-w-xs">

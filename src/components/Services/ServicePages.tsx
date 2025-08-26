@@ -25,7 +25,7 @@ export const ServicePages = () => {
             name: 'Web Development',
             icon: Code,
             image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=2072&q=80',
-            price: '$2,999',
+            price: '₹29,999',
             shortDesc: 'Custom responsive websites',
             fullDescription: 'Transform your digital presence with cutting-edge web solutions. I create responsive, fast-loading websites that engage users and drive conversions.',
             features: [
@@ -54,11 +54,11 @@ export const ServicePages = () => {
             }
         },
         {
-            id: 'mobile-development',
-            name: 'Mobile Development',
+            id: 'app-development',
+            name: 'App Development',
             icon: Smartphone,
             image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=2072&q=80',
-            price: '$4,499',
+            price: '₹79,499',
             shortDesc: 'Native and cross-platform apps',
             fullDescription: 'Build powerful mobile applications that deliver exceptional user experiences across iOS and Android platforms with cutting-edge native and cross-platform solutions.',
             features: [
@@ -91,7 +91,7 @@ export const ServicePages = () => {
             name: 'UI/UX Design',
             icon: Palette,
             image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=2072&q=80',
-            price: '$1,999',
+            price: '₹1,999',
             shortDesc: 'User-centered design solutions',
             fullDescription: 'Create stunning, intuitive user experiences that convert visitors into customers through research-driven design and modern aesthetics.',
             features: [
@@ -148,12 +148,12 @@ export const ServicePages = () => {
                             key={service.id}
                             onClick={() => setActiveService(service.id)}
                             className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all duration-300 group ${isActive
-                                ? 'bg-indigo-600 text-white shadow-lg'
+                                ? 'bg-blue-600 text-white shadow-lg'
                                 : 'hover:bg-gray-800 text-gray-300 hover:text-white'
                                 }`}
                         >
                             <div className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300 ${isActive
-                                ? 'bg-indigo-500/30'
+                                ? 'bg-blue-600/30'
                                 : 'bg-gray-700 group-hover:bg-gray-600'
                                 }`}>
                                 <IconComponent className={`w-5 h-5 ${isActive ? 'text-white' : 'text-indigo-400'}`} />
@@ -212,7 +212,7 @@ export const ServicePages = () => {
                                         }`}>
                                         <div className="space-y-6">
                                             <div className="flex items-center gap-4">
-                                                <div className="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-2xl">
+                                                <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center shadow-2xl">
                                                     <ServiceIcon className="w-8 h-8 text-white" />
                                                 </div>
                                                 <div>
@@ -231,7 +231,7 @@ export const ServicePages = () => {
                                         <div className="grid grid-cols-3 gap-6">
                                             <div className="text-center">
                                                 <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center mx-auto mb-2">
-                                                    <Clock className="w-6 h-6 text-indigo-400" />
+                                                    <Clock className="w-6 h-6 text-blue-600" />
                                                 </div>
                                                 <div className="text-xl font-bold text-white">{currentService.deliveryTime}</div>
                                                 <div className="text-sm text-gray-400">Delivery</div>
@@ -245,7 +245,7 @@ export const ServicePages = () => {
                                             </div>
                                             <div className="text-center">
                                                 <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center mx-auto mb-2">
-                                                    <Star className="w-6 h-6 text-indigo-400" />
+                                                    <Star className="w-6 h-6 text-blue-600" />
                                                 </div>
                                                 <div className="text-xl font-bold text-white">4.9</div>
                                                 <div className="text-sm text-gray-400">Rating</div>
@@ -254,7 +254,7 @@ export const ServicePages = () => {
 
                                         {/* CTA */}
                                         <div className="flex flex-col sm:flex-row gap-4">
-                                            <Button size="lg" className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg">
+                                            <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg">
                                                 Start Project - {currentService.price}
                                                 <ArrowRight className="w-5 h-5 ml-2" />
                                             </Button>
@@ -272,7 +272,7 @@ export const ServicePages = () => {
                                         <Card className="bg-gray-900/95 border-gray-800 text-gray-200 backdrop-blur-sm">
                                             <CardHeader>
                                                 <CardTitle className="text-xl flex items-center gap-2 text-white">
-                                                    <Check className="w-5 h-5 text-indigo-400" />
+                                                    <Check className="w-5 h-5 text-blue-600" />
                                                     What's Included
                                                 </CardTitle>
                                             </CardHeader>
@@ -284,7 +284,7 @@ export const ServicePages = () => {
                                                             className="flex items-start gap-3 p-3 rounded-lg bg-gray-800/80 border border-gray-700"
                                                         >
                                                             <div className="w-5 h-5 bg-indigo-500/20 rounded-full flex items-center justify-center mt-0.5">
-                                                                <Check className="w-3 h-3 text-indigo-400" />
+                                                                <Check className="w-3 h-3 text-blue-600" />
                                                             </div>
                                                             <span className="text-sm">{feature}</span>
                                                         </div>
@@ -318,7 +318,7 @@ export const ServicePages = () => {
                                                 <div className="space-y-3">
                                                     {currentService.detailedInfo.process.map((step, idx) => (
                                                         <div key={idx} className="flex items-center gap-3">
-                                                            <div className="w-7 h-7 bg-indigo-500/20 rounded-full flex items-center justify-center text-indigo-400 font-bold text-xs">
+                                                            <div className="w-7 h-7 bg-indigo-500/20 rounded-full flex items-center justify-center text-blue-600 font-bold text-xs">
                                                                 {idx + 1}
                                                             </div>
                                                             <span className="text-sm">{step}</span>
@@ -335,7 +335,7 @@ export const ServicePages = () => {
                                     <Card className="bg-gray-900/95 border-gray-800 text-gray-200 backdrop-blur-sm">
                                         <CardHeader>
                                             <CardTitle className="text-xl text-white flex items-center gap-2">
-                                                <Award className="w-5 h-5 text-indigo-400" />
+                                                <Award className="w-5 h-5 text-blue-600s" />
                                                 Success Stories
                                             </CardTitle>
                                         </CardHeader>
