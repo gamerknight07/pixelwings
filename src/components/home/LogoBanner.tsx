@@ -18,21 +18,22 @@ export const LogoBanner = () => {
   ];
 
   return (
-    <section className="py-20 bg-black overflow-hidden" style={{ fontFamily: 'Sansation, sans-serif' }}>
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+    <section className="py-12 sm:py-16 lg:py-20 bg-black overflow-hidden" style={{ fontFamily: 'Sansation, sans-serif' }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">
             Build with us
           </h2>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-400 max-w-2xl mx-auto px-4 sm:px-0">
             Join our platform to grow your business
           </p>
         </div>
 
         {/* Logo Grid */}
         <div className="relative">
-          <div className="absolute left-0 top-0 w-20 h-72 bg-gradient-to-r from-black to-transparent z-10"></div>
-          <div className="absolute right-0 top-0 w-20 h-72 bg-gradient-to-l from-black to-transparent z-10"></div>
+          {/* Gradient overlays - responsive widths */}
+          <div className="absolute left-0 top-0 w-8 sm:w-12 lg:w-20 h-48 sm:h-56 lg:h-72 bg-gradient-to-r from-black to-transparent z-10"></div>
+          <div className="absolute right-0 top-0 w-8 sm:w-12 lg:w-20 h-48 sm:h-56 lg:h-72 bg-gradient-to-l from-black to-transparent z-10"></div>
 
           {/* Scrolling container */}
           <div className="overflow-hidden">
@@ -45,19 +46,19 @@ export const LogoBanner = () => {
                 return (
                   <div
                     key={`first-${index}`}
-                    className="flex-shrink-0 flex items-center justify-center w-64 h-60 group cursor-pointer"
+                    className="flex-shrink-0 flex items-center justify-center w-40 sm:w-48 lg:w-64 h-40 sm:h-48 lg:h-60 group cursor-pointer"
                   >
-                    <div className="w-56 h-56 flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:scale-105 transition-all duration-300">
+                    <div className="w-32 sm:w-40 lg:w-56 h-32 sm:h-40 lg:h-56 flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:scale-105 transition-all duration-300">
                       {!hasImageFailed ? (
                         <img
                           src={logo.logo}
                           alt={`${logo.name} logo`}
-                          className="w-52 h-52 object-cover rounded-lg grayscale group-hover:grayscale-0 transition-all duration-300"
+                          className="w-28 sm:w-36 lg:w-52 h-28 sm:h-36 lg:h-52 object-cover rounded-lg grayscale group-hover:grayscale-0 transition-all duration-300"
                           onError={() => handleImageError(logo.name, `first-${index}`)}
                         />
                       ) : (
-                        <div className="w-52 h-52 bg-gradient-to-r from-gray-100 to-gray-200 rounded-lg flex items-center justify-center">
-                          <span className="text-gray-600 font-medium text-sm">{logo.name}</span>
+                        <div className="w-28 sm:w-36 lg:w-52 h-28 sm:h-36 lg:h-52 bg-gradient-to-r from-gray-100 to-gray-200 rounded-lg flex items-center justify-center">
+                          <span className="text-gray-600 font-medium text-xs sm:text-sm text-center px-2">{logo.name}</span>
                         </div>
                       )}
                     </div>
@@ -73,19 +74,19 @@ export const LogoBanner = () => {
                 return (
                   <div
                     key={`second-${index}`}
-                    className="flex-shrink-0 flex items-center justify-center w-64 h-60 group cursor-pointer"
+                    className="flex-shrink-0 flex items-center justify-center w-40 sm:w-48 lg:w-64 h-40 sm:h-48 lg:h-60 group cursor-pointer"
                   >
-                    <div className="w-56 h-56 flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:scale-105 transition-all duration-300">
+                    <div className="w-32 sm:w-40 lg:w-56 h-32 sm:h-40 lg:h-56 flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:scale-105 transition-all duration-300">
                       {!hasImageFailed ? (
                         <img
                           src={logo.logo}
                           alt={`${logo.name} logo`}
-                          className="w-52 h-52 object-cover rounded-lg grayscale group-hover:grayscale-0 transition-all duration-300"
+                          className="w-28 sm:w-36 lg:w-52 h-28 sm:h-36 lg:h-52 object-cover rounded-lg grayscale group-hover:grayscale-0 transition-all duration-300"
                           onError={() => handleImageError(logo.name, `second-${index}`)}
                         />
                       ) : (
-                        <div className="w-52 h-52 bg-gradient-to-r from-gray-100 to-gray-200 rounded-lg flex items-center justify-center">
-                          <span className="text-gray-600 font-medium text-sm">{logo.name}</span>
+                        <div className="w-28 sm:w-36 lg:w-52 h-28 sm:h-36 lg:h-52 bg-gradient-to-r from-gray-100 to-gray-200 rounded-lg flex items-center justify-center">
+                          <span className="text-gray-600 font-medium text-xs sm:text-sm text-center px-2">{logo.name}</span>
                         </div>
                       )}
                     </div>
@@ -101,19 +102,19 @@ export const LogoBanner = () => {
                 return (
                   <div
                     key={`third-${index}`}
-                    className="flex-shrink-0 flex items-center justify-center w-64 h-60 group cursor-pointer"
+                    className="flex-shrink-0 flex items-center justify-center w-40 sm:w-48 lg:w-64 h-40 sm:h-48 lg:h-60 group cursor-pointer"
                   >
-                    <div className="w-56 h-56 flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:scale-105 transition-all duration-300">
+                    <div className="w-32 sm:w-40 lg:w-56 h-32 sm:h-40 lg:h-56 flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:scale-105 transition-all duration-300">
                       {!hasImageFailed ? (
                         <img
                           src={logo.logo}
                           alt={`${logo.name} logo`}
-                          className="w-52 h-52 object-cover rounded-lg grayscale group-hover:grayscale-0 transition-all duration-300"
+                          className="w-28 sm:w-36 lg:w-52 h-28 sm:h-36 lg:h-52 object-cover rounded-lg grayscale group-hover:grayscale-0 transition-all duration-300"
                           onError={() => handleImageError(logo.name, `third-${index}`)}
                         />
                       ) : (
-                        <div className="w-52 h-52 bg-gradient-to-r from-gray-100 to-gray-200 rounded-lg flex items-center justify-center">
-                          <span className="text-gray-600 font-medium text-sm">{logo.name}</span>
+                        <div className="w-28 sm:w-36 lg:w-52 h-28 sm:h-36 lg:h-52 bg-gradient-to-r from-gray-100 to-gray-200 rounded-lg flex items-center justify-center">
+                          <span className="text-gray-600 font-medium text-xs sm:text-sm text-center px-2">{logo.name}</span>
                         </div>
                       )}
                     </div>
@@ -149,6 +150,19 @@ export const LogoBanner = () => {
         /* Hardware acceleration for ultra-smooth scrolling */
         .animate-scroll > div {
           transform: translateZ(0);
+        }
+
+        /* Responsive animation speed adjustments */
+        @media (max-width: 640px) {
+          .animate-scroll {
+            animation-duration: 35s;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .animate-scroll {
+            animation-duration: 30s;
+          }
         }
       `}</style>
     </section>

@@ -34,12 +34,14 @@ export const CTA = () => {
           Start today, scale tomorrow!
         </p>
 
-        <Button
-          size="lg"
-          className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-glow animate-glow-pulse"
-        >
-          <Link to="/contact">Book your free intro call</Link>
-        </Button>
+        <Link to="/contact">
+          <Button
+            size="lg"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-glow animate-glow-pulse"
+          >
+            Book your free intro call
+          </Button>
+        </Link>
       </div>
     </section>
   );

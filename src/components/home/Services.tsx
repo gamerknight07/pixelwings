@@ -1,11 +1,12 @@
 import { TrendingUp, MousePointer, Heart, TabletSmartphone, Code, Figma, Megaphone } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const Services = () => {
   const service = [
-    { name: "App Development", icons: TabletSmartphone, href: "/services/framer-design" },
-    { name: "Web Development", icons: Code, href: "/services/web-design" },
-    { name: "UI/UX Design", icons: Figma, href: "/services/graphic-design" },
-    { name: "Digital Marketing", icons: Megaphone, href: "/services/digital-marketing" },
+    { name: "App Development", icons: TabletSmartphone },
+    { name: "Web Development", icons: Code },
+    { name: "UI/UX Design", icons: Figma },
+    { name: "Digital Marketing", icons: Megaphone },
   ];
 
   const stats = [
@@ -134,12 +135,14 @@ export const Services = () => {
                     return (
                       <div
                         key={service.uniqueId}
-                        className="flex items-center space-x-2 md:space-x-3 backdrop-blur-sm px-4 sm:px-6 md:px-8 py-3 md:py-4 whitespace-nowrap transition-all duration-300 flex-shrink-0 cursor-pointer hover:bg-white/5 rounded-lg"
+                        className="flex items-center space-x-2 md:space-x-3 backdrop-blur-sm px-4 sm:px-6 md:px-8 py-3 md:py-4 whitespace-nowrap transition-all duration-300 flex-shrink-0 cursor-pointer"
                       >
+
                         <div className="w-6 h-6 md:w-7 md:h-7 text-white rounded-full flex items-center justify-center text-sm font-bold">
                           <IconComponent className="w-4 h-4 md:w-5 md:h-5" />
                         </div>
-                        <span className="text-xs sm:text-sm font-medium">{service.name}</span>
+                        <Link to="/servicedetails"> <span className="text-xs sm:text-sm font-medium">{service.name}</span></Link>
+
                       </div>
                     );
                   })}

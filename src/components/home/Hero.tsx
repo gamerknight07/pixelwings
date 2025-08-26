@@ -1,16 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-// import { Button } from "@/components/ui/button";
-// import { Link } from "react-router-dom";
-
-// Fallback Button component for demo
-const Button = ({ children, size, className, ...props }) => (
-  <button
-    className={`px-6 py-3 rounded-lg font-medium ${className}`}
-    {...props}
-  >
-    {children}
-  </button>
-);
+import { Button } from '@/components/ui/button';
+import { Link } from "react-router-dom";
 
 export const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -144,12 +134,14 @@ export const Hero = () => {
             }}
           >
             {/* CTA Button */}
-            <Button
-              size="lg"
-              className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg transition-all duration-300 hover:scale-105"
-            >
-              <a href="#contact">Book your free intro call</a>
-            </Button>
+            <Link to="/contact">
+              <Button
+                size="lg"
+                className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg transition-all duration-300 hover:scale-105"
+              >
+                Book your free intro call
+              </Button>
+            </Link>
           </div>
         </div>
 

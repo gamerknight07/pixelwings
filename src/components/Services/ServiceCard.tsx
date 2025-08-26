@@ -2,8 +2,9 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Check, Star, ArrowRight, Clock, RotateCcw, Award } from "lucide-react";
+import { Check, ArrowRight, Clock, RotateCcw } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 interface Service {
     id: string;
@@ -28,21 +29,22 @@ export const ServiceCard = ({ service, index }: ServiceCardProps) => {
     const isReversed = index % 2 === 1;
     const cardRef = useRef<HTMLDivElement>(null);
     const [isVisible, setIsVisible] = useState(false);
-    const [hasAnimated, setHasAnimated] = useState(false);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
-                    if (entry.isIntersecting && !hasAnimated) {
+                    // Trigger when element is 20% visible for smoother transitions
+                    if (entry.intersectionRatio > 0.2) {
                         setIsVisible(true);
-                        setHasAnimated(true);
+                    } else {
+                        setIsVisible(false);
                     }
                 });
             },
             {
-                threshold: 0.1,
-                rootMargin: '50px 0px -50px 0px'
+                threshold: [0, 0.2, 0.5, 0.8, 1],
+                rootMargin: '-5% 0px -5% 0px'
             }
         );
 
@@ -55,21 +57,24 @@ export const ServiceCard = ({ service, index }: ServiceCardProps) => {
                 observer.unobserve(cardRef.current);
             }
         };
-    }, [hasAnimated]);
+    }, []);
 
     return (
         <Card
             ref={cardRef}
             className={`group relative overflow-hidden border border-border/50 hover:border-primary/30 hover:shadow-2xl transition-all duration-700 bg-gradient-to-br from-background via-background to-background/95 ${isVisible
-                ? 'animate-in fade-in-0 slide-in-from-bottom-6 duration-1000 ease-out'
-                : 'opacity-0 translate-y-6'
+                ? 'opacity-100 translate-y-0 scale-100'
+                : 'opacity-0 translate-y-12 scale-95'
                 }`}
             style={{
-                transitionDelay: isVisible ? `${index * 200}ms` : '0ms'
+                transitionDelay: isVisible ? `${index * 150}ms` : '0ms',
+                transitionDuration: '800ms',
+                transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)'
             }}
         >
             {/* Subtle background pattern */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(120,119,198,0.05),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            <div className={`absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(120,119,198,0.05),transparent)] transition-opacity duration-700 ${isVisible ? 'opacity-0 group-hover:opacity-100' : 'opacity-0'
+                }`} />
 
             <div className={`grid lg:grid-cols-2 gap-0 ${isReversed ? 'lg:grid-flow-col-dense' : ''}`}>
                 {/* Image Section */}
@@ -83,12 +88,13 @@ export const ServiceCard = ({ service, index }: ServiceCardProps) => {
                                 : 'scale-110 opacity-0'
                                 }`}
                             style={{
-                                transitionDelay: isVisible ? `${(index * 200) + 300}ms` : '0ms'
+                                transitionDelay: isVisible ? `${(index * 150) + 200}ms` : '0ms'
                             }}
                         />
 
                         {/* Enhanced gradient overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 group-hover:from-primary/20 group-hover:to-accent/20 transition-all duration-700" />
+                        <div className={`absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 group-hover:from-primary/20 group-hover:to-accent/20 transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-60'
+                            }`} />
 
                         {/* Professional grid overlay */}
                         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.02)_1px,transparent_1px)] bg-[size:20px_20px] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
@@ -99,7 +105,7 @@ export const ServiceCard = ({ service, index }: ServiceCardProps) => {
                             : 'translate-x-8 opacity-0'
                             }`}
                             style={{
-                                transitionDelay: isVisible ? `${(index * 200) + 600}ms` : '0ms'
+                                transitionDelay: isVisible ? `${(index * 150) + 400}ms` : '0ms'
                             }}>
                             <div className="bg-background/95 backdrop-blur-md rounded-2xl px-5 py-3 border border-border/50 shadow-lg ring-1 ring-primary/10">
                                 <div className="text-center">
@@ -110,7 +116,8 @@ export const ServiceCard = ({ service, index }: ServiceCardProps) => {
                         </div>
 
                         {/* Corner accent */}
-                        <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                        <div className={`absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-primary/20 to-transparent transition-opacity duration-700 ${isVisible ? 'opacity-0 group-hover:opacity-100' : 'opacity-0'
+                            }`} />
                     </div>
                 </div>
 
@@ -123,7 +130,7 @@ export const ServiceCard = ({ service, index }: ServiceCardProps) => {
                                 : 'translate-y-8 opacity-0 scale-75'
                                 }`}
                                 style={{
-                                    transitionDelay: isVisible ? `${(index * 200) + 400}ms` : '0ms'
+                                    transitionDelay: isVisible ? `${(index * 150) + 300}ms` : '0ms'
                                 }}>
                                 <div className="w-14 h-14 bg-gradient-to-br from-primary to-primary/80 rounded-2xl flex items-center justify-center shadow-lg ring-4 ring-primary/10 group-hover:ring-primary/20 transition-all duration-500">
                                     <service.icon className="w-7 h-7 text-primary-foreground" />
@@ -137,7 +144,7 @@ export const ServiceCard = ({ service, index }: ServiceCardProps) => {
                                     : 'translate-x-8 opacity-0'
                                     }`}
                                     style={{
-                                        transitionDelay: isVisible ? `${(index * 200) + 500}ms` : '0ms'
+                                        transitionDelay: isVisible ? `${(index * 150) + 350}ms` : '0ms'
                                     }}>
                                     {service.name}
                                 </CardTitle>
@@ -149,7 +156,7 @@ export const ServiceCard = ({ service, index }: ServiceCardProps) => {
                             : 'translate-y-4 opacity-0'
                             }`}
                             style={{
-                                transitionDelay: isVisible ? `${(index * 200) + 600}ms` : '0ms'
+                                transitionDelay: isVisible ? `${(index * 150) + 400}ms` : '0ms'
                             }}>
                             {service.fullDescription}
                         </CardDescription>
@@ -162,7 +169,7 @@ export const ServiceCard = ({ service, index }: ServiceCardProps) => {
                             : 'translate-y-6 opacity-0'
                             }`}
                             style={{
-                                transitionDelay: isVisible ? `${(index * 200) + 700}ms` : '0ms'
+                                transitionDelay: isVisible ? `${(index * 150) + 500}ms` : '0ms'
                             }}>
                             <h4 className="font-bold text-foreground mb-5 text-lg flex items-center gap-2">
                                 <Check className="w-5 h-5 text-primary" />
@@ -176,7 +183,7 @@ export const ServiceCard = ({ service, index }: ServiceCardProps) => {
                                             : 'translate-x-4 opacity-0'
                                             }`}
                                         style={{
-                                            transitionDelay: isVisible ? `${(index * 200) + 800 + (idx * 50)}ms` : '0ms'
+                                            transitionDelay: isVisible ? `${(index * 150) + 600 + (idx * 50)}ms` : '0ms'
                                         }}
                                     >
                                         <div className="w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center mt-0.5 flex-shrink-0">
@@ -194,7 +201,7 @@ export const ServiceCard = ({ service, index }: ServiceCardProps) => {
                             : 'translate-y-6 opacity-0'
                             }`}
                             style={{
-                                transitionDelay: isVisible ? `${(index * 200) + 900}ms` : '0ms'
+                                transitionDelay: isVisible ? `${(index * 150) + 700}ms` : '0ms'
                             }}>
                             <h4 className="font-bold text-foreground mb-4 text-lg">Technology Stack</h4>
                             <div className="flex flex-wrap gap-2">
@@ -207,7 +214,7 @@ export const ServiceCard = ({ service, index }: ServiceCardProps) => {
                                             : 'scale-75 opacity-0'
                                             }`}
                                         style={{
-                                            transitionDelay: isVisible ? `${(index * 200) + 1000 + (idx * 50)}ms` : '0ms'
+                                            transitionDelay: isVisible ? `${(index * 150) + 800 + (idx * 30)}ms` : '0ms'
                                         }}
                                     >
                                         {tech}
@@ -218,18 +225,18 @@ export const ServiceCard = ({ service, index }: ServiceCardProps) => {
 
                         {/* Project Details */}
                         <div className={`grid grid-cols-2 gap-6 p-6 bg-gradient-to-r from-card/50 to-card/30 rounded-2xl border border-border/30 backdrop-blur-sm transition-all duration-700 ease-out ${isVisible
-                            ? 'translate-y-0 opacity-100'
-                            : 'translate-y-8 opacity-0'
+                            ? 'translate-y-0 opacity-100 scale-100'
+                            : 'translate-y-8 opacity-0 scale-95'
                             }`}
                             style={{
-                                transitionDelay: isVisible ? `${(index * 200) + 1100}ms` : '0ms'
+                                transitionDelay: isVisible ? `${(index * 150) + 900}ms` : '0ms'
                             }}>
                             <div className={`text-center transition-all duration-500 ${isVisible
                                 ? 'translate-x-0 opacity-100'
-                                : 'translate-x-4 opacity-0'
+                                : '-translate-x-4 opacity-0'
                                 }`}
                                 style={{
-                                    transitionDelay: isVisible ? `${(index * 200) + 1200}ms` : '0ms'
+                                    transitionDelay: isVisible ? `${(index * 150) + 950}ms` : '0ms'
                                 }}>
                                 <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-3">
                                     <Clock className="w-5 h-5 text-primary" />
@@ -242,7 +249,7 @@ export const ServiceCard = ({ service, index }: ServiceCardProps) => {
                                 : 'translate-x-4 opacity-0'
                                 }`}
                                 style={{
-                                    transitionDelay: isVisible ? `${(index * 200) + 1250}ms` : '0ms'
+                                    transitionDelay: isVisible ? `${(index * 150) + 1000}ms` : '0ms'
                                 }}>
                                 <div className="w-10 h-10 bg-accent/10 rounded-xl flex items-center justify-center mx-auto mb-3">
                                     <RotateCcw className="w-5 h-5 text-accent" />
@@ -254,17 +261,17 @@ export const ServiceCard = ({ service, index }: ServiceCardProps) => {
 
                         {/* Enhanced CTA Buttons */}
                         <div className={`flex flex-col sm:flex-row gap-4 pt-4 transition-all duration-700 ease-out ${isVisible
-                            ? 'translate-y-0 opacity-100'
-                            : 'translate-y-8 opacity-0'
+                            ? 'translate-y-0 opacity-100 scale-100'
+                            : 'translate-y-8 opacity-0 scale-95'
                             }`}
                             style={{
-                                transitionDelay: isVisible ? `${(index * 200) + 1300}ms` : '0ms'
+                                transitionDelay: isVisible ? `${(index * 150) + 1100}ms` : '0ms'
                             }}>
                             <Button
                                 size="lg"
                                 className="flex-1 group/btn bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg hover:shadow-xl transition-all duration-500 py-6 rounded-2xl font-semibold text-base"
                             >
-                                Start Your Project
+                                <Link to="/servicedetails">Start Your Project</Link>
                                 <ArrowRight className="w-5 h-5 ml-2 group-hover/btn:translate-x-2 transition-transform duration-300" />
                             </Button>
                         </div>

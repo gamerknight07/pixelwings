@@ -32,9 +32,11 @@ export const Header = () => {
 
             {/* Desktop Contact Button */}
             <div className="hidden md:block">
-              <Button variant="default" className="bg-primary hover:bg-primary/90 text-white shadow-glow transition-all duration-300 hover:scale-105">
-                <Link to="/contact">Contact us</Link>
-              </Button>
+              <Link to="/contact">
+                <Button variant="default" className="bg-primary hover:bg-primary/90 text-white shadow-glow transition-all duration-300 hover:scale-105">
+                  Contact us
+                </Button>
+              </Link>
             </div>
 
             {/* Mobile Menu Button */}
@@ -74,9 +76,11 @@ export const Header = () => {
                 About Us
               </Link>
               <div className="pt-2">
-                <Button variant="default" className="w-full bg-primary hover:bg-primary/90 text-white shadow-glow transition-all duration-300 hover:scale-105">
-                  <Link to="/contact" onClick={closeMobileMenu}>Contact us</Link>
-                </Button>
+                <Link to="/contact" onClick={closeMobileMenu}>
+                  <Button variant="default" className="w-full bg-primary hover:bg-primary/90 text-white shadow-glow transition-all duration-300 hover:scale-105">
+                    Contact us
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>

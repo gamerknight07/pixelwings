@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const Pricing = () => {
   const plans = [
@@ -115,14 +116,14 @@ export const Pricing = () => {
                   </div>
                 ))}
 
-                <Button
+                <Link to="/contact"><Button
                   className={`w-full mt-6 sm:mt-8 py-3 sm:py-4 text-sm sm:text-base font-semibold transition-all duration-300 ${plan.featured
                     ? 'bg-gradient-to-r from-blue-500 to-blue-900 hover:from-blue-900 hover:to-blue-500 text-white shadow-lg shadow-blue-500/30 transform hover:scale-105'
                     : 'bg-gray-700 hover:bg-gray-600 text-white shadow-md shadow-gray-700/50 hover:shadow-lg hover:shadow-gray-600/50 transform hover:scale-105 border border-gray-600 hover:border-gray-500'
                     }`}
                 >
                   Get Started
-                </Button>
+                </Button></Link>
               </CardContent>
             </Card>
           ))}
