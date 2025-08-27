@@ -1,7 +1,10 @@
 import { TrendingUp, MousePointer, Heart, TabletSmartphone, Code, Figma, Megaphone } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
 
 export const Services = () => {
+  const [visibleElements, setVisibleElements] = useState(new Set());
+  const observerRef = useRef(null);
+
   const service = [
     { name: "App Development", icons: TabletSmartphone },
     { name: "Web Development", icons: Code },
@@ -71,6 +74,70 @@ export const Services = () => {
       className: "col-span-2"
     }
   ];
+
+  // Scroll trigger setup
+  useEffect(() => {
+    const observerOptions = {
+      threshold: [0, 0.1, 0.3, 0.5, 0.7, 1],
+      rootMargin: "-10% 0px -10% 0px"
+    };
+
+    observerRef.current = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const elementId = entry.target.getAttribute('data-animate');
+        if (entry.isIntersecting && entry.intersectionRatio > 0.1) {
+          setVisibleElements(prev => new Set(prev).add(elementId));
+        } else if (!entry.isIntersecting || entry.intersectionRatio <= 0.1) {
+          setVisibleElements(prev => {
+            const newSet = new Set(prev);
+            newSet.delete(elementId);
+            return newSet;
+          });
+        }
+      });
+    }, observerOptions);
+
+    // Observe all elements with data-animate attribute
+    const elementsToObserve = document.querySelectorAll('[data-animate]');
+    elementsToObserve.forEach(el => {
+      if (observerRef.current) {
+        observerRef.current.observe(el);
+      }
+    });
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, []);
+
+  const getAnimationClass = (elementId, animationType = 'fadeInUp') => {
+    const isVisible = visibleElements.has(elementId);
+
+    const animations = {
+      fadeInUp: isVisible
+        ? 'opacity-100 transform translate-y-0'
+        : 'opacity-0 transform translate-y-8',
+      fadeInDown: isVisible
+        ? 'opacity-100 transform translate-y-0'
+        : 'opacity-0 transform -translate-y-8',
+      fadeInLeft: isVisible
+        ? 'opacity-100 transform translate-x-0'
+        : 'opacity-0 transform -translate-x-8',
+      fadeInRight: isVisible
+        ? 'opacity-100 transform translate-x-0'
+        : 'opacity-0 transform translate-x-8',
+      scaleIn: isVisible
+        ? 'opacity-100 transform scale-100'
+        : 'opacity-0 transform scale-95',
+      slideInUp: isVisible
+        ? 'opacity-100 transform translate-y-0'
+        : 'opacity-0 transform translate-y-12',
+    };
+
+    return `transition-all duration-700 ease-out ${animations[animationType] || animations.fadeInUp}`;
+  };
 
   return (
     <>
@@ -215,12 +282,44 @@ export const Services = () => {
             line-height: 1.25 !important;
           }
         }
+
+        /* Custom scroll animations */
+        .animate-on-scroll {
+          transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .stagger-animation-1 {
+          transition-delay: 100ms;
+        }
+        
+        .stagger-animation-2 {
+          transition-delay: 200ms;
+        }
+        
+        .stagger-animation-3 {
+          transition-delay: 300ms;
+        }
+        
+        .stagger-animation-4 {
+          transition-delay: 400ms;
+        }
+        
+        .stagger-animation-5 {
+          transition-delay: 500ms;
+        }
+        
+        .stagger-animation-6 {
+          transition-delay: 600ms;
+        }
       `}</style>
 
       <section id="services" className="py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24 bg-black text-white relative overflow-hidden" style={{ fontFamily: 'Sansation, sans-serif' }}>
         <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 max-w-7xl">
-          {/* Header - Enhanced Responsive */}
-          <div className="text-center mb-8 sm:mb-12 md:mb-16 lg:mb-20">
+          {/* Header - Enhanced Responsive with Scroll Trigger */}
+          <div
+            className={`text-center mb-8 sm:mb-12 md:mb-16 lg:mb-20 ${getAnimationClass('header', 'fadeInDown')}`}
+            data-animate="header"
+          >
             <h2 className="main-heading text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold mb-3 sm:mb-4 md:mb-6 leading-tight px-1 sm:px-2">
               Our team believes you deserve<br className="hidden xs:block" />
               <span className="xs:hidden">you deserve </span>only the best.
@@ -231,8 +330,11 @@ export const Services = () => {
             </p>
           </div>
 
-          {/* Service Categories - Enhanced Responsive Infinite Scroll */}
-          <div className="flex justify-center mb-8 sm:mb-12 md:mb-16 lg:mb-20 xl:mb-24">
+          {/* Service Categories - Enhanced Responsive Infinite Scroll with Scroll Trigger */}
+          <div
+            className={`flex justify-center mb-8 sm:mb-12 md:mb-16 lg:mb-20 xl:mb-24 ${getAnimationClass('services', 'scaleIn')}`}
+            data-animate="services"
+          >
             <div className="scroll-blur-container w-full max-w-xs sm:max-w-sm md:max-w-2xl lg:max-w-4xl xl:max-w-5xl">
               <div className="scrolling-container">
                 <div className="flex animate-infinite-scroll space-x-3 sm:space-x-4 md:space-x-6 lg:space-x-8">
@@ -246,11 +348,9 @@ export const Services = () => {
                         <div className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 text-white rounded-full flex items-center justify-center">
                           <IconComponent className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" />
                         </div>
-                        <Link to="/servicedetails" className="hover:text-gray-300 transition-colors">
-                          <span className="text-xs sm:text-sm md:text-base lg:text-lg font-medium">
-                            {service.name}
-                          </span>
-                        </Link>
+                        <span className="text-xs sm:text-sm md:text-base lg:text-lg font-medium hover:text-gray-300 transition-colors">
+                          {service.name}
+                        </span>
                       </div>
                     );
                   })}
@@ -259,8 +359,11 @@ export const Services = () => {
             </div>
           </div>
 
-          {/* Photo Collage Gallery - Enhanced Responsive */}
-          <div className="relative max-w-6xl mx-auto mb-12 sm:mb-16 md:mb-20 lg:mb-24 xl:mb-28 px-2 sm:px-4 lg:px-0">
+          {/* Photo Collage Gallery - Enhanced Responsive with Scroll Trigger */}
+          <div
+            className={`relative max-w-6xl mx-auto mb-12 sm:mb-16 md:mb-20 lg:mb-24 xl:mb-28 px-2 sm:px-4 lg:px-0 ${getAnimationClass('gallery', 'fadeInUp')}`}
+            data-animate="gallery"
+          >
             {/* Photo Collage Grid */}
             <div className="relative">
               {/* Mobile Layout - Enhanced with better spacing */}
@@ -268,7 +371,8 @@ export const Services = () => {
                 {collageImages.slice(0, 6).map((image, index) => (
                   <div
                     key={index}
-                    className="collage-item relative overflow-hidden rounded-xl sm:rounded-2xl shadow-xl"
+                    className={`collage-item relative overflow-hidden rounded-xl sm:rounded-2xl shadow-xl ${getAnimationClass(`mobile-image-${index}`, 'fadeInLeft')}`}
+                    data-animate={`mobile-image-${index}`}
                   >
                     <img
                       src={image.src}
@@ -286,7 +390,8 @@ export const Services = () => {
                 {collageImages.slice(0, 6).map((image, index) => (
                   <div
                     key={index}
-                    className="collage-item relative overflow-hidden rounded-2xl shadow-xl min-h-[200px]"
+                    className={`collage-item relative overflow-hidden rounded-2xl shadow-xl min-h-[200px] ${getAnimationClass(`tablet-image-${index}`, index % 2 === 0 ? 'fadeInLeft' : 'fadeInRight')}`}
+                    data-animate={`tablet-image-${index}`}
                   >
                     <img
                       src={image.src}
@@ -312,7 +417,8 @@ export const Services = () => {
                 {collageImages.map((image, index) => (
                   <div
                     key={index}
-                    className={`collage-item relative overflow-hidden rounded-2xl shadow-xl ${image.className}`}
+                    className={`collage-item relative overflow-hidden rounded-2xl shadow-xl ${image.className} ${getAnimationClass(`desktop-image-${index}`, 'scaleIn')} ${index < 6 ? `stagger-animation-${index + 1}` : ''}`}
+                    data-animate={`desktop-image-${index}`}
                   >
                     <img
                       src={image.src}
@@ -335,12 +441,19 @@ export const Services = () => {
             </div>
           </div>
 
-          {/* Stats - Enhanced Responsive Layout */}
-          <div className="flex flex-col sm:flex-row justify-center items-center space-y-6 sm:space-y-0 sm:space-x-6 md:space-x-8 lg:space-x-12 xl:space-x-16 2xl:space-x-20">
+          {/* Stats - Enhanced Responsive Layout with Scroll Trigger */}
+          <div
+            className={`flex flex-col sm:flex-row justify-center items-center space-y-6 sm:space-y-0 sm:space-x-6 md:space-x-8 lg:space-x-12 xl:space-x-16 2xl:space-x-20 ${getAnimationClass('stats', 'slideInUp')}`}
+            data-animate="stats"
+          >
             {stats.map((stat, index) => {
               const StatIcon = stat.icon;
               return (
-                <div key={index} className="text-center group w-full sm:w-auto">
+                <div
+                  key={index}
+                  className={`text-center group w-full sm:w-auto ${getAnimationClass(`stat-${index}`, 'fadeInUp')} ${index < 3 ? `stagger-animation-${(index + 1) * 2}` : ''}`}
+                  data-animate={`stat-${index}`}
+                >
                   <div className="flex flex-col sm:flex-row items-center justify-center mb-3 sm:mb-4 md:mb-6">
                     <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 bg-gray-800 rounded-full flex items-center justify-center mb-2 sm:mb-0 sm:mr-3 md:mr-4 lg:mr-5 group-hover:bg-gray-700 transition-colors duration-300 shadow-lg">
                       <StatIcon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 text-white" />

@@ -70,16 +70,19 @@ export const Testimonials = () => {
     return () => clearInterval(interval);
   }, [isMobile, isPaused]);
 
-  // Scrolling animation for company logos
+  // Scrolling animation for company logos - faster on mobile
   useEffect(() => {
     if (isPaused) return;
 
+    const scrollSpeed = isMobile ? 1.2 : 0.5; // Faster scroll on mobile
+    const intervalTime = isMobile ? 30 : 50; // More frequent updates on mobile
+
     const interval = setInterval(() => {
-      setScrollPosition(prev => prev + 0.5);
-    }, 50);
+      setScrollPosition(prev => prev + scrollSpeed);
+    }, intervalTime);
 
     return () => clearInterval(interval);
-  }, [isPaused]);
+  }, [isPaused, isMobile]);
 
   return (
     <section className="min-h-screen bg-black text-white py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 lg:px-10" style={{ fontFamily: 'Sansation, sans-serif' }}>
@@ -182,18 +185,18 @@ export const Testimonials = () => {
           </div>
         </div>
 
-        {/* Company Logos with Scroll Effect */}
+        {/* Company Logos with Scroll Effect - Faster on Mobile */}
         <div
-          className="relative overflow-hidden py-2 sm:py-4 px-2"
+          className="relative overflow-hidden py-6 sm:py-8 px-2"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
           <div
-            className={`flex items-center space-x-8 sm:space-x-12 md:space-x-16 transition-opacity duration-300 ${isPaused ? 'opacity-60' : 'opacity-40'
+            className={`flex items-center space-x-6 sm:space-x-8 md:space-x-12 lg:space-x-16 transition-opacity duration-300 ${isPaused ? 'opacity-60' : 'opacity-40'
               }`}
             style={{
-              transform: `translateX(-${scrollPosition % (Tools.length * (isMobile ? 100 : 140) / 2)}px)`,
-              width: `${Tools.length * (isMobile ? 100 : 140)}px`
+              transform: `translateX(-${scrollPosition % (Tools.length * (isMobile ? 80 : 140) / 2)}px)`,
+              width: `${Tools.length * (isMobile ? 80 : 140)}px`
             }}
           >
             {Tools.map((company, index) => (
@@ -202,7 +205,7 @@ export const Testimonials = () => {
                 className={`text-gray-400 text-sm sm:text-base md:text-lg font-medium tracking-wide whitespace-nowrap flex-shrink-0 transition-colors duration-200 py-2 ${isPaused ? 'text-gray-300' : 'text-gray-400'
                   }`}
                 style={{
-                  minWidth: isMobile ? '100px' : '140px',
+                  minWidth: isMobile ? '80px' : '140px',
                   textAlign: 'center'
                 }}
               >
@@ -212,8 +215,8 @@ export const Testimonials = () => {
           </div>
 
           {/* Gradient overlays */}
-          <div className="absolute left-0 top-0 w-20 sm:w-32 md:w-40 h-full bg-gradient-to-r from-black via-black/80 to-transparent pointer-events-none"></div>
-          <div className="absolute right-0 top-0 w-20 sm:w-32 md:w-40 h-full bg-gradient-to-l from-black via-black/80 to-transparent pointer-events-none"></div>
+          <div className="absolute left-0 top-0 w-16 sm:w-20 md:w-32 lg:w-40 h-full bg-gradient-to-r from-black via-black/80 to-transparent pointer-events-none"></div>
+          <div className="absolute right-0 top-0 w-16 sm:w-20 md:w-32 lg:w-40 h-full bg-gradient-to-l from-black via-black/80 to-transparent pointer-events-none"></div>
         </div>
       </div>
     </section>
