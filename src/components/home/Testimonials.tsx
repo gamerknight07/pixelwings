@@ -32,6 +32,7 @@ export const Testimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const nextTestimonial = () => {
     setCurrentIndex((prev) => (prev + 1) % testimonials.length);
@@ -41,11 +42,35 @@ export const Testimonials = () => {
     setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
-  const companies = [
-    "Horizon", "GreatAI", "Hexagon", "CloudTech", "StartupX",
-    "Horizon", "GreatAI", "Hexagon", "CloudTech", "StartupX"
+  const Tools = [
+    "Figma", "AWS", "Dart", "Flutter", "React", "Express", "Figma", "AWS", "Dart", "Flutter", "React", "Express"
   ];
 
+  // Check for mobile screen size
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Auto-scroll for testimonials on mobile
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const interval = setInterval(() => {
+      if (!isPaused) {
+        nextTestimonial();
+      }
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [isMobile, isPaused]);
+
+  // Scrolling animation for company logos
   useEffect(() => {
     if (isPaused) return;
 
@@ -57,37 +82,41 @@ export const Testimonials = () => {
   }, [isPaused]);
 
   return (
-    <section className="min-h-screen bg-black text-white py-20 px-4 md:px-6 lg:px-10" style={{ fontFamily: 'Sansation, sans-serif' }}>
-      <div className="max-w-6xl mx-auto">
+    <section className="min-h-screen bg-black text-white py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 lg:px-10" style={{ fontFamily: 'Sansation, sans-serif' }}>
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-24 px-4">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold mb-8 text-gray-200 leading-tight">
+        <div className="text-center mb-16 sm:mb-20 md:mb-24">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold mb-6 sm:mb-8 text-gray-200 leading-tight px-2">
             Don't take our word for it
           </h2>
-          <p className="text-base md:text-lg text-gray-400 max-w-xl mx-auto leading-relaxed px-4">
-            See what our happy clients have to say about<br />
-            our subscription-based web design services.
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-400 max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl mx-auto leading-relaxed px-2">
+            See what our happy clients have to say about<br className="hidden sm:block" />
+            <span className="sm:hidden"> </span>our subscription-based web design services.
           </p>
         </div>
 
         {/* Testimonial Card */}
-        <div className="relative max-w-4xl mx-auto mb-28 px-2">
-          <div className="bg-gray-800/40 backdrop-blur-md rounded-2xl p-8 md:p-12 lg:p-16 xl:p-20 relative border border-gray-700/30 shadow-2xl">
+        <div
+          className="relative max-w-5xl mx-auto mb-20 sm:mb-24 md:mb-28 px-2 sm:px-4"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsMobile ? setIsPaused(false) : setIsPaused(false)}
+        >
+          <div className="bg-gray-800/40 backdrop-blur-md rounded-xl sm:rounded-2xl p-6 sm:p-8 md:p-12 lg:p-16 xl:p-20 relative border border-gray-700/30 shadow-2xl">
             {/* Quote Icon */}
-            <div className="flex justify-center mb-10">
-              <Quote className="text-6xl md:text-8xl text-white/80 font-serif" />
+            <div className="flex justify-center mb-6 sm:mb-8 md:mb-10">
+              <Quote className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white/80" />
             </div>
 
             {/* Testimonial Content */}
-            <div className="text-center px-4 md:px-8">
-              <p className="text-lg md:text-xl lg:text-2xl font-light leading-relaxed mb-14 text-white/95 max-w-3xl mx-auto">
+            <div className="text-center">
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-light leading-relaxed mb-10 sm:mb-12 md:mb-14 text-white/95 max-w-4xl mx-auto px-2">
                 {testimonials[currentIndex].content}
               </p>
 
               {/* Author */}
-              <div className="flex items-center justify-center space-x-4 px-4">
-                <div className="relative">
-                  <div className="w-12 h-12 md:w-16 md:h-16 rounded-full overflow-hidden shadow-lg ring-2 ring-white/20">
+              <div className="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-4 px-2">
+                <div className="relative flex-shrink-0">
+                  <div className="w-16 h-16 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 rounded-full overflow-hidden shadow-lg ring-2 ring-white/20">
                     {testimonials[currentIndex].image ? (
                       <img
                         src={testimonials[currentIndex].image}
@@ -107,41 +136,45 @@ export const Testimonials = () => {
                     )}
                   </div>
                 </div>
-                <div className="text-left">
-                  <div className="font-semibold text-white text-base md:text-lg">
+                <div className="text-center sm:text-left">
+                  <div className="font-semibold text-white text-lg sm:text-base md:text-lg lg:text-xl">
                     {testimonials[currentIndex].name}
                   </div>
-                  <div className="text-gray-300 text-sm md:text-base">
+                  <div className="text-gray-300 text-base sm:text-sm md:text-base lg:text-lg">
                     {testimonials[currentIndex].role}
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Navigation Arrows */}
-            <button
-              onClick={prevTestimonial}
-              className="absolute left-4 md:left-6 lg:left-8 top-1/2 transform -translate-y-1/2 w-12 h-12 rounded-full bg-gray-700/50 hover:bg-gray-600/70 transition-all duration-300 flex items-center justify-center group border border-gray-600/30"
-            >
-              <ChevronLeft className="w-5 h-5 text-gray-300 group-hover:text-white transition-colors" />
-            </button>
+            {/* Navigation Arrows - Hidden on mobile, auto-advance instead */}
+            {!isMobile && (
+              <>
+                <button
+                  onClick={prevTestimonial}
+                  className="absolute left-2 sm:left-4 md:left-6 lg:left-8 top-1/2 transform -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-700/50 hover:bg-gray-600/70 transition-all duration-300 flex items-center justify-center group border border-gray-600/30"
+                >
+                  <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300 group-hover:text-white transition-colors" />
+                </button>
 
-            <button
-              onClick={nextTestimonial}
-              className="absolute right-4 md:right-6 lg:right-8 top-1/2 transform -translate-y-1/2 w-12 h-12 rounded-full bg-gray-700/50 hover:bg-gray-600/70 transition-all duration-300 flex items-center justify-center group border border-gray-600/30"
-            >
-              <ChevronRight className="w-5 h-5 text-gray-300 group-hover:text-white transition-colors" />
-            </button>
+                <button
+                  onClick={nextTestimonial}
+                  className="absolute right-2 sm:right-4 md:right-6 lg:right-8 top-1/2 transform -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-700/50 hover:bg-gray-600/70 transition-all duration-300 flex items-center justify-center group border border-gray-600/30"
+                >
+                  <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300 group-hover:text-white transition-colors" />
+                </button>
+              </>
+            )}
           </div>
 
           {/* Dots Indicator */}
-          <div className="flex justify-center mt-10 space-x-3 px-4">
+          <div className="flex justify-center mt-8 sm:mt-10 space-x-2 sm:space-x-3">
             {testimonials.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
                 className={`h-2 rounded-full transition-all duration-300 ${index === currentIndex
-                  ? 'bg-white w-8'
+                  ? 'bg-white w-6 sm:w-8'
                   : 'bg-gray-500 hover:bg-gray-400 w-2'
                   }`}
               />
@@ -151,24 +184,27 @@ export const Testimonials = () => {
 
         {/* Company Logos with Scroll Effect */}
         <div
-          className="relative overflow-hidden py-8 px-4"
+          className="relative overflow-hidden py-2 sm:py-4 px-2"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
           <div
-            className={`flex items-center space-x-16 transition-opacity duration-300 ${isPaused ? 'opacity-60' : 'opacity-40'
+            className={`flex items-center space-x-8 sm:space-x-12 md:space-x-16 transition-opacity duration-300 ${isPaused ? 'opacity-60' : 'opacity-40'
               }`}
             style={{
-              transform: `translateX(-${scrollPosition % (companies.length * 140 / 2)}px)`,
-              width: `${companies.length * 140}px`
+              transform: `translateX(-${scrollPosition % (Tools.length * (isMobile ? 100 : 140) / 2)}px)`,
+              width: `${Tools.length * (isMobile ? 100 : 140)}px`
             }}
           >
-            {companies.map((company, index) => (
+            {Tools.map((company, index) => (
               <div
                 key={index}
-                className={`text-gray-400 text-base md:text-lg font-medium tracking-wide whitespace-nowrap flex-shrink-0 transition-colors duration-200 py-2 ${isPaused ? 'text-gray-300' : 'text-gray-400'
+                className={`text-gray-400 text-sm sm:text-base md:text-lg font-medium tracking-wide whitespace-nowrap flex-shrink-0 transition-colors duration-200 py-2 ${isPaused ? 'text-gray-300' : 'text-gray-400'
                   }`}
-                style={{ minWidth: '140px', textAlign: 'center' }}
+                style={{
+                  minWidth: isMobile ? '100px' : '140px',
+                  textAlign: 'center'
+                }}
               >
                 {company}
               </div>
@@ -176,8 +212,8 @@ export const Testimonials = () => {
           </div>
 
           {/* Gradient overlays */}
-          <div className="absolute left-0 top-0 w-40 h-full bg-gradient-to-r from-black via-black/80 to-transparent pointer-events-none"></div>
-          <div className="absolute right-0 top-0 w-40 h-full bg-gradient-to-l from-black via-black/80 to-transparent pointer-events-none"></div>
+          <div className="absolute left-0 top-0 w-20 sm:w-32 md:w-40 h-full bg-gradient-to-r from-black via-black/80 to-transparent pointer-events-none"></div>
+          <div className="absolute right-0 top-0 w-20 sm:w-32 md:w-40 h-full bg-gradient-to-l from-black via-black/80 to-transparent pointer-events-none"></div>
         </div>
       </div>
     </section>

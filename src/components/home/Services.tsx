@@ -34,6 +34,44 @@ export const Services = () => {
     ...service.map((s, i) => ({ ...s, uniqueId: `set3-${i}` }))
   ];
 
+  const collageImages = [
+    {
+      src: "https://images.unsplash.com/photo-1570841398972-8aaa69ec72f2?w=1000&auto=format&fit=crop&q=60",
+      alt: "Creative workspace with design tools",
+      className: "row-span-2 col-span-2"
+    },
+    {
+      src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+      alt: "Modern web development interface",
+      className: "col-span-1"
+    },
+    {
+      src: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+      alt: "Developer coding on laptop",
+      className: "col-span-1"
+    },
+    {
+      src: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+      alt: "UI/UX design mockups",
+      className: "col-span-1"
+    },
+    {
+      src: "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+      alt: "Mobile app development",
+      className: "col-span-1"
+    },
+    {
+      src: "https://plus.unsplash.com/premium_photo-1684225764999-3597a8da10ab?q=80&w=1032&auto=format&fit=crop",
+      alt: "Digital marketing analytics",
+      className: "col-span-2"
+    },
+    {
+      src: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1170&auto=format&fit=crop",
+      alt: "Digital Analytics",
+      className: "col-span-2"
+    }
+  ];
+
   return (
     <>
       <style>{`
@@ -47,7 +85,7 @@ export const Services = () => {
         }
         
         .animate-infinite-scroll {
-          animation: infiniteScroll 20s linear infinite;
+          animation: infiniteScroll 25s linear infinite;
           will-change: transform;
         }
 
@@ -74,11 +112,47 @@ export const Services = () => {
           pointer-events: none;
         }
 
+        /* Small mobile blur edges */
+        @media (max-width: 480px) {
+          .scroll-blur-container::before,
+          .scroll-blur-container::after {
+            width: 40px;
+          }
+          
+          .scroll-blur-container::before {
+            left: 0;
+            background: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.9) 40%, rgba(0, 0, 0, 0) 100%);
+          }
+
+          .scroll-blur-container::after {
+            right: 0;
+            background: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.9) 40%, rgba(0, 0, 0, 0) 100%);
+          }
+        }
+
         /* Mobile blur edges */
-        @media (max-width: 768px) {
+        @media (min-width: 481px) and (max-width: 768px) {
           .scroll-blur-container::before,
           .scroll-blur-container::after {
             width: 60px;
+          }
+          
+          .scroll-blur-container::before {
+            left: 0;
+            background: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0) 100%);
+          }
+
+          .scroll-blur-container::after {
+            right: 0;
+            background: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0) 100%);
+          }
+        }
+
+        /* Tablet blur edges */
+        @media (min-width: 769px) and (max-width: 1024px) {
+          .scroll-blur-container::before,
+          .scroll-blur-container::after {
+            width: 80px;
           }
           
           .scroll-blur-container::before {
@@ -93,7 +167,7 @@ export const Services = () => {
         }
 
         /* Desktop blur edges */
-        @media (min-width: 769px) {
+        @media (min-width: 1025px) {
           .scroll-blur-container::before,
           .scroll-blur-container::after {
             width: 120px;
@@ -101,48 +175,82 @@ export const Services = () => {
           
           .scroll-blur-container::before {
             left: 0;
-            background: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 30%, rgba(0, 0, 0, 0) 100%);
+            background: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 25%, rgba(0, 0, 0, 0) 100%);
           }
 
           .scroll-blur-container::after {
             right: 0;
-            background: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 30%, rgba(0, 0, 0, 0) 100%);
+            background: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 25%, rgba(0, 0, 0, 0) 100%);
+          }
+        }
+
+        .collage-item {
+          transition: all 0.3s ease;
+        }
+
+        .collage-item:hover {
+          transform: scale(1.02);
+          z-index: 10;
+        }
+
+        .collage-item img {
+          transition: all 0.3s ease;
+        }
+
+        .collage-item:hover img {
+          brightness: 1.1;
+        }
+
+        /* Enhanced responsive typography */
+        @media (max-width: 375px) {
+          .main-heading {
+            font-size: 1.75rem !important;
+            line-height: 1.2 !important;
+          }
+        }
+
+        @media (min-width: 376px) and (max-width: 480px) {
+          .main-heading {
+            font-size: 2rem !important;
+            line-height: 1.25 !important;
           }
         }
       `}</style>
 
-      <section id="services" className="py-12 md:py-16 lg:py-24 bg-black text-white relative overflow-hidden" style={{ fontFamily: 'Sansation, sans-serif' }}>
-        <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
-          {/* Header */}
-          <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 md:mb-6 leading-tight px-2">
-              Our team believes you deserve<br className="hidden sm:block" />
-              <span className="sm:hidden">you deserve </span>only the best.
+      <section id="services" className="py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24 bg-black text-white relative overflow-hidden" style={{ fontFamily: 'Sansation, sans-serif' }}>
+        <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 max-w-7xl">
+          {/* Header - Enhanced Responsive */}
+          <div className="text-center mb-8 sm:mb-12 md:mb-16 lg:mb-20">
+            <h2 className="main-heading text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold mb-3 sm:mb-4 md:mb-6 leading-tight px-1 sm:px-2">
+              Our team believes you deserve<br className="hidden xs:block" />
+              <span className="xs:hidden">you deserve </span>only the best.
             </h2>
-            <p className="text-base md:text-lg text-gray-400 max-w-2xl mx-auto px-4">
+            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-400 max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-3xl mx-auto px-2 sm:px-4 leading-relaxed">
               We are committed to delivering top-quality solutions, ensuring<br className="hidden md:block" />
               <span className="md:hidden">ensuring </span>you get the best in innovation, design, and functionality.
             </p>
           </div>
 
-          {/* Service Categories - Responsive Infinite Scroll */}
-          <div className="flex justify-center mb-12 md:mb-16 lg:mb-20">
-            <div className="scroll-blur-container w-full max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-4xl">
+          {/* Service Categories - Enhanced Responsive Infinite Scroll */}
+          <div className="flex justify-center mb-8 sm:mb-12 md:mb-16 lg:mb-20 xl:mb-24">
+            <div className="scroll-blur-container w-full max-w-xs sm:max-w-sm md:max-w-2xl lg:max-w-4xl xl:max-w-5xl">
               <div className="scrolling-container">
-                <div className="flex animate-infinite-scroll space-x-4 md:space-x-6">
+                <div className="flex animate-infinite-scroll space-x-3 sm:space-x-4 md:space-x-6 lg:space-x-8">
                   {extendedServices.map((service) => {
                     const IconComponent = service.icons;
                     return (
                       <div
                         key={service.uniqueId}
-                        className="flex items-center space-x-2 md:space-x-3 backdrop-blur-sm px-4 sm:px-6 md:px-8 py-3 md:py-4 whitespace-nowrap transition-all duration-300 flex-shrink-0 cursor-pointer"
+                        className="flex items-center space-x-2 sm:space-x-3 backdrop-blur-sm px-3 sm:px-4 md:px-6 lg:px-8 py-2.5 sm:py-3 md:py-4 whitespace-nowrap transition-all duration-300 flex-shrink-0 cursor-pointer hover:bg-gray-800/30 rounded-xl"
                       >
-
-                        <div className="w-6 h-6 md:w-7 md:h-7 text-white rounded-full flex items-center justify-center text-sm font-bold">
-                          <IconComponent className="w-4 h-4 md:w-5 md:h-5" />
+                        <div className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 text-white rounded-full flex items-center justify-center">
+                          <IconComponent className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" />
                         </div>
-                        <Link to="/servicedetails"> <span className="text-xs sm:text-sm font-medium">{service.name}</span></Link>
-
+                        <Link to="/servicedetails" className="hover:text-gray-300 transition-colors">
+                          <span className="text-xs sm:text-sm md:text-base lg:text-lg font-medium">
+                            {service.name}
+                          </span>
+                        </Link>
                       </div>
                     );
                   })}
@@ -151,63 +259,99 @@ export const Services = () => {
             </div>
           </div>
 
-          {/* Design Showcase Gallery */}
-          <div className="relative max-w-6xl mx-auto mb-16 md:mb-20 lg:mb-24 px-4 sm:px-0">
-            {/* Decorative plants - Hidden on mobile, visible on larger screens */}
-            <div className="hidden lg:block absolute -left-16 -bottom-4 w-24 h-32 opacity-70 z-0">
-              <div className="w-full h-full bg-gradient-to-t from-green-700 via-green-600 to-green-500 rounded-t-full transform rotate-12"></div>
-              <div className="absolute top-3 left-4 w-6 h-16 bg-gradient-to-t from-green-600 to-green-400 rounded-t-full transform -rotate-12"></div>
-              <div className="absolute top-1 right-3 w-4 h-12 bg-gradient-to-t from-green-600 to-green-400 rounded-t-full transform rotate-45"></div>
-            </div>
-
-            <div className="hidden lg:block absolute -right-16 -bottom-4 w-20 h-28 opacity-70 z-0">
-              <div className="w-full h-full bg-gradient-to-t from-green-700 via-green-600 to-green-500 rounded-t-full transform -rotate-12"></div>
-              <div className="absolute top-3 right-4 w-4 h-12 bg-gradient-to-t from-green-600 to-green-400 rounded-t-full transform rotate-12"></div>
-            </div>
-
-            {/* Mac Monitor Frame - Responsive */}
-            <div className="relative bg-gradient-to-b from-gray-800 to-gray-900 rounded-t-2xl md:rounded-t-3xl p-4 sm:p-6 md:p-8 shadow-2xl border border-gray-700">
-              {/* Screen Bezel */}
-              <div className="bg-black rounded-xl md:rounded-2xl p-1">
-                {/* Actual Screen with Design Images */}
-                <div className="bg-gray-50 rounded-lg md:rounded-xl min-h-[250px] sm:min-h-[300px] md:min-h-[400px] relative overflow-hidden">
-                  {/* Main Design Showcase */}
-                  <img
-                    src="https://images.unsplash.com/photo-1559028006-448665bd7c7f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2574&q=80"
-                    alt="Design workspace with creative tools and plants"
-                    className="absolute inset-0 w-full h-full object-cover rounded-lg md:rounded-xl"
-                  />
-
-                  {/* Overlay for better contrast */}
-                  <div className="absolute inset-0 bg-black/20 rounded-lg md:rounded-xl"></div>
-                </div>
+          {/* Photo Collage Gallery - Enhanced Responsive */}
+          <div className="relative max-w-6xl mx-auto mb-12 sm:mb-16 md:mb-20 lg:mb-24 xl:mb-28 px-2 sm:px-4 lg:px-0">
+            {/* Photo Collage Grid */}
+            <div className="relative">
+              {/* Mobile Layout - Enhanced with better spacing */}
+              <div className="grid grid-cols-1 gap-3 sm:gap-4 md:hidden">
+                {collageImages.slice(0, 6).map((image, index) => (
+                  <div
+                    key={index}
+                    className="collage-item relative overflow-hidden rounded-xl sm:rounded-2xl shadow-xl"
+                  >
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      className="w-full h-40 sm:h-48 md:h-56 object-cover"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-xl sm:rounded-2xl"></div>
+                  </div>
+                ))}
               </div>
 
-              {/* Mac Stand - Responsive */}
-              <div className="flex justify-center mt-3 md:mt-4">
-                <div className="w-16 sm:w-20 md:w-24 h-4 sm:h-5 md:h-6 bg-gradient-to-b from-gray-700 to-gray-800 rounded-b-xl md:rounded-b-2xl shadow-lg"></div>
+              {/* Tablet Layout - 2x3 grid */}
+              <div className="hidden md:grid lg:hidden grid-cols-2 gap-4 auto-rows-fr">
+                {collageImages.slice(0, 6).map((image, index) => (
+                  <div
+                    key={index}
+                    className="collage-item relative overflow-hidden rounded-2xl shadow-xl min-h-[200px]"
+                  >
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
+
+                    {/* Optional overlay text for first image */}
+                    {index === 0 && (
+                      <div className="absolute bottom-4 left-4 text-white">
+                        <h3 className="text-lg font-bold mb-1">Our Creative Process</h3>
+                        <p className="text-xs text-gray-200">Bringing ideas to life</p>
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
-              <div className="flex justify-center mt-1">
-                <div className="w-28 sm:w-32 md:w-40 h-2 sm:h-2.5 md:h-3 bg-gradient-to-b from-gray-700 to-gray-800 rounded-full shadow-lg"></div>
+
+              {/* Desktop Layout - Enhanced Grid collage */}
+              <div className="hidden lg:grid grid-cols-4 grid-rows-3 gap-3 lg:gap-4 h-[450px] lg:h-[500px] xl:h-[600px]">
+                {collageImages.map((image, index) => (
+                  <div
+                    key={index}
+                    className={`collage-item relative overflow-hidden rounded-2xl shadow-xl ${image.className}`}
+                  >
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
+
+                    {/* Enhanced overlay text for main image */}
+                    {index === 0 && (
+                      <div className="absolute bottom-4 lg:bottom-6 left-4 lg:left-6 text-white">
+                        <h3 className="text-lg lg:text-xl xl:text-2xl font-bold mb-1 lg:mb-2">Our Creative Process</h3>
+                        <p className="text-xs lg:text-sm text-gray-200 max-w-xs">Bringing ideas to life through design and technology</p>
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
 
-          {/* Stats - Responsive Layout */}
-          <div className="flex flex-col sm:flex-row justify-center items-center space-y-8 sm:space-y-0 sm:space-x-8 md:space-x-12 lg:space-x-20">
+          {/* Stats - Enhanced Responsive Layout */}
+          <div className="flex flex-col sm:flex-row justify-center items-center space-y-6 sm:space-y-0 sm:space-x-6 md:space-x-8 lg:space-x-12 xl:space-x-16 2xl:space-x-20">
             {stats.map((stat, index) => {
               const StatIcon = stat.icon;
               return (
-                <div key={index} className="text-center group">
-                  <div className="flex flex-col sm:flex-row items-center justify-center mb-4 md:mb-6">
-                    <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gray-800 rounded-full flex items-center justify-center mb-3 sm:mb-0 sm:mr-4 group-hover:bg-gray-700 transition-colors duration-300">
-                      <StatIcon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+                <div key={index} className="text-center group w-full sm:w-auto">
+                  <div className="flex flex-col sm:flex-row items-center justify-center mb-3 sm:mb-4 md:mb-6">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 bg-gray-800 rounded-full flex items-center justify-center mb-2 sm:mb-0 sm:mr-3 md:mr-4 lg:mr-5 group-hover:bg-gray-700 transition-colors duration-300 shadow-lg">
+                      <StatIcon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 text-white" />
                     </div>
-                    <span className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                    <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                       {stat.value}
                     </span>
                   </div>
-                  <p className="text-gray-400 text-sm md:text-base font-medium">{stat.label}</p>
+                  <p className="text-gray-400 text-xs sm:text-sm md:text-base lg:text-lg font-medium px-2">
+                    {stat.label}
+                  </p>
                 </div>
               );
             })}
