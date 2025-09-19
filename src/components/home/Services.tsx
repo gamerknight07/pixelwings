@@ -419,7 +419,7 @@ export const Services = () => {
                     key={index}
                     className={`collage-item relative overflow-hidden rounded-2xl shadow-xl ${image.className} ${getAnimationClass(`desktop-image-${index}`, 'scaleIn')} ${index < 6 ? `stagger-animation-${index + 1}` : ''}`}
                     data-animate={`desktop-image-${index}`}
-                  >
+                  >  
                     <img
                       src={image.src}
                       alt={image.alt}
